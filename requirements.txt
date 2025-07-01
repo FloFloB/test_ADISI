@@ -6,4 +6,4 @@ matplotlib
 seaborn
 networkx
 numpy
-sklearn
+scikit-learn
