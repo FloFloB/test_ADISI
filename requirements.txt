@@ -2,3 +2,8 @@ streamlit
 youtube-transcript-api
 pandas
 matplotlib
+matplotlib
+seaborn
+networkx
+numpy
+sklearn
