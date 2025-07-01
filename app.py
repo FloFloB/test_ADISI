@@ -15,7 +15,7 @@ def contains_number(text):
 def extract_with_context(snippets):
     indices_to_keep = set()
     for i, snippet in enumerate(snippets):
-        if contains_number(snippet['text']):
+        if contains_number(snippet.text):
             indices_to_keep.update([i - 1, i, i + 1])
 
     final_output = [snippets[i] for i in sorted(indices_to_keep) if 0 <= i < len(snippets)]
@@ -63,8 +63,8 @@ if video_url:
                 st.subheader("Filtered Transcript Snippets with Numbers (French - English)")
 
                 for fr_snip, en_snip in zip(fr_filtered, en_filtered):
-                    st.markdown(f"**[{fr_snip['start']:.2f}s] FR:** {fr_snip['text']}")
-                    st.markdown(f"                        **EN:** {en_snip['text']}")
+                    st.markdown(f"**[{fr_snip.start:.2f}s] FR:** {fr_snip.text}")
+                    st.markdown(f"                        **EN:** {en_snip.text}")
                     st.write("---")
 
         except (TranscriptsDisabled, NoTranscriptFound, VideoUnavailable) as e:
