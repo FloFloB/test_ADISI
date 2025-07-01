@@ -44,6 +44,13 @@ def display_snippets_in_groups(fr_snippets, en_snippets, group_size=3):
             st.markdown(f"                        **EN:** {en_snip.text}")
             st.write("")
 
+
+proxies = {
+    "http": "http://51.222.244.155:4857",
+    "https": "http://51.222.244.155:4857"
+}
+
+
 st.title("YouTube Transcript Number Extractor")
 
 video_url = st.text_input("Enter a YouTube video URL")
@@ -55,7 +62,7 @@ if video_url:
     else:
         st.write(f"Extracted Video ID: {video_id}")
         try:
-            transcripts = YouTubeTranscriptApi.list_transcripts(video_id)
+            transcripts = YouTubeTranscriptApi.list_transcripts(video_id, proxies=proxies)
 
             try:
                 # Try to get English transcript and translate to French
