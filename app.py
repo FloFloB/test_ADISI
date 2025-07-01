@@ -46,8 +46,8 @@ def display_snippets_in_groups(fr_snippets, en_snippets, group_size=3):
 
 
 proxies = {
-    "http": "http://51.222.244.155:4857",
-    "https": "http://51.222.244.155:4857"
+    "http": "http://123.140.146.1:5031",
+    "https": "http://123.140.146.1:5031"
 }
 
 
