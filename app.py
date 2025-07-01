@@ -46,10 +46,9 @@ def display_snippets_in_groups(fr_snippets, en_snippets, group_size=3):
 
 
 proxies = {
-    "http": "http://123.140.146.1:5031",
-    "https": "http://123.140.146.1:5031"
+    "http": "http://85.206.93.105:8080",
+    "https": "http://85.206.93.105:8080"
 }
-
 
 st.title("YouTube Transcript Number Extractor")
 
