@@ -397,7 +397,7 @@ uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 if uploaded_file:
     # Step 2: Load DataFrame
     df = pd.read_csv(uploaded_file)
-
+    df= df.drop_duplicates(subset=['username', 'content', 'date'])
     # Preview
     st.write("### Raw Data Preview", df.head())
 
@@ -434,6 +434,7 @@ similarity_threshold = st.slider("Select Similarity Threshold", 0.0, 1.0, 0.2, 0
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
+    df= df.drop_duplicates(subset=['username', 'content', 'date'])
     # Preview
     st.write("### Raw Data Preview", df.head())
     if 'username' not in df.columns or 'content' not in df.columns:
