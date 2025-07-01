@@ -434,7 +434,8 @@ similarity_threshold = st.slider("Select Similarity Threshold", 0.0, 1.0, 0.2, 0
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
-
+    # Preview
+    st.write("### Raw Data Preview", df.head())
     if 'username' not in df.columns or 'text' not in df.columns:
         st.error("CSV must contain 'username' and 'text' columns.")
     else:
