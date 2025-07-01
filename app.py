@@ -1,6 +1,9 @@
 import streamlit as st
 import re
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound, VideoUnavailable
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
 # Define the snippet structure for easier handling
 class Snippet:
@@ -49,6 +52,42 @@ proxies = {
     "http": "http://85.206.93.105:8080",
     "https": "http://85.206.93.105:8080"
 }
+
+st.title("📊 Twitter Activity in Cameroon")
+
+# Step 1: File Upload
+uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
+
+if uploaded_file:
+    # Step 2: Load DataFrame
+    df = pd.read_csv(uploaded_file)
+
+    # Preview
+    st.write("### Raw Data Preview", df.head())
+
+    # Step 3: Parse 'date' column
+    try:
+        df['parsed_date'] = pd.to_datetime(df['date'].str.replace('·', ''), format="%b %d, %Y %I:%M %p UTC")
+
+        # Step 4: Aggregate by month
+        df['month'] = df['parsed_date'].dt.to_period('M').dt.to_timestamp()
+        monthly_counts = df['month'].value_counts().sort_index()
+
+        # Step 5: Plot
+        st.write("### Monthly Tweet Volume")
+        fig, ax = plt.subplots(figsize=(12, 6))
+        ax.plot(monthly_counts.index, monthly_counts.values, marker='o', linestyle='-')
+        ax.set_title("Monthly Tweet Activity")
+        ax.set_xlabel("Month")
+        ax.set_ylabel("Tweet Count")
+        ax.grid(True)
+        plt.xticks(rotation=45)
+        st.pyplot(fig)
+
+    except Exception as e:
+        st.error(f"⚠️ Date parsing failed: {e}")
+else:
+    st.info("👈 Please upload a `.csv` file with a 'date' column.")
 
 st.title("YouTube Transcript Number Extractor")
 
