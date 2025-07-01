@@ -436,17 +436,17 @@ if uploaded_file:
     df = pd.read_csv(uploaded_file)
     # Preview
     st.write("### Raw Data Preview", df.head())
-    if 'username' not in df.columns or 'text' not in df.columns:
-        st.error("CSV must contain 'username' and 'text' columns.")
+    if 'username' not in df.columns or 'content' not in df.columns:
+        st.error("CSV must contain 'username' and 'content' columns.")
     else:
         st.success(f"Loaded {len(df)} tweets from {df['username'].nunique()} users.")
 
         # Step 1: Group tweets per user
-        user_texts = df.groupby('username')['text'].apply(lambda x: ' '.join(x)).reset_index()
+        user_texts = df.groupby('username')['content'].apply(lambda x: ' '.join(x)).reset_index()
 
         # Step 2: TF-IDF vectorization
         tfidf = TfidfVectorizer(stop_words='english')
-        tfidf_matrix = tfidf.fit_transform(user_texts['text'])
+        tfidf_matrix = tfidf.fit_transform(user_texts['content'])
 
         # Step 3: Cosine similarity between users
         sim_matrix = cosine_similarity(tfidf_matrix)
