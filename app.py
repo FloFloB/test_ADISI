@@ -31,6 +31,19 @@ def extract_video_id(url):
         return qs.get('v', [None])[0]
     return None
 
+def display_snippets_in_groups(fr_snippets, en_snippets, group_size=3):
+    for i in range(0, len(fr_snippets), group_size):
+        fr_group = fr_snippets[i:i+group_size]
+        en_group = en_snippets[i:i+group_size]
+        
+        # Display group header or separator if you want
+        st.markdown("---")
+        
+        for fr_snip, en_snip in zip(fr_group, en_group):
+            st.markdown(f"**[{fr_snip.start:.2f}s] FR:** {fr_snip.text}")
+            st.markdown(f"                        **EN:** {en_snip.text}")
+            st.write("")
+
 st.title("YouTube Transcript Number Extractor")
 
 video_url = st.text_input("Enter a YouTube video URL")
@@ -62,10 +75,11 @@ if video_url:
             else:
                 st.subheader("Filtered Transcript Snippets with Numbers (French - English)")
 
-                for fr_snip, en_snip in zip(fr_filtered, en_filtered):
-                    st.markdown(f"**[{fr_snip.start:.2f}s] FR:** {fr_snip.text}")
-                    st.markdown(f"                        **EN:** {en_snip.text}")
-                    st.write("---")
+                #for fr_snip, en_snip in zip(fr_filtered, en_filtered):
+                #   st.markdown(f"**[{fr_snip.start:.2f}s] FR:** {fr_snip.text}")
+                #    st.markdown(f"                        **EN:** {en_snip.text}")
+                #    st.write("---")
+                display_snippets_in_groups(fr_filtered, en_filtered, group_size=3)
 
         except (TranscriptsDisabled, NoTranscriptFound, VideoUnavailable) as e:
             st.error(f"Transcript unavailable: {e}")
