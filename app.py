@@ -435,6 +435,7 @@ similarity_threshold = st.slider("Select Similarity Threshold", 0.0, 1.0, 0.2, 0
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
     df= df.drop_duplicates(subset=['username', 'content', 'date'])
+    df = df[df['content'].notnull() & df['content'].str.strip().astype(bool)]
     # Preview
     st.write("### Raw Data Preview", df.head())
     if 'username' not in df.columns or 'content' not in df.columns:
